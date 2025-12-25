@@ -1,0 +1,14 @@
+# Laravel
+/vendor
+/node_modules
+/.env
+/public/storage
+/storage/*.key
+/database/database.sqlite
+
+# Node
+worker-node/node_modules
+
+# React
+frontend/node_modules
+frontend/dist
