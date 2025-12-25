@@ -1,59 +1,188 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# BeyondChats Automation Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This repository contains a **monolithic project** for BeyondChats, including:
 
-## About Laravel
+- **Laravel Backend**: Stores and manages articles in MySQL and exposes CRUD APIs.  
+- **NodeJS Worker**: Automates fetching the latest article, searches Google for related content, scrapes reference articles, rewrites content using an LLM, and updates the backend.  
+- **React Frontend**: Displays both original and updated articles with a clean UI.  
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Table of Contents
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. [Project Overview](#project-overview)  
+2. [Architecture & Data Flow](#architecture--data-flow)  
+3. [Local Setup Instructions](#local-setup-instructions)  
+4. [Folder Structure](#folder-structure)  
+5. [Deployment](#deployment)  
+6. [Live Demo](#live-demo)  
+7. [Credits](#credits)  
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Project Overview
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+This project demonstrates an automated content rewriting system:
 
-## Laravel Sponsors
+1. **Backend**: Laravel handles storing articles, exposing REST APIs (`/api/articles`, `/api/articles/latest`).  
+2. **NodeJS Worker**: Automatically fetches the latest article, finds reference articles via Google, scrapes content, rewrites using OpenAI LLM, and updates Laravel.  
+3. **Frontend**: React app that fetches articles via API and shows both original and updated content to users.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## Architecture & Data Flow
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+# BeyondChats Automation Project
 
-## Contributing
+This repository contains a **monolithic project** for BeyondChats, including:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Laravel Backend**: Stores and manages articles in MySQL and exposes CRUD APIs.  
+- **NodeJS Worker**: Automates fetching the latest article, searches Google for related content, scrapes reference articles, rewrites content using an LLM, and updates the backend.  
+- **React Frontend**: Displays both original and updated articles with a clean UI.  
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Table of Contents
 
-## Security Vulnerabilities
+1. [Project Overview](#project-overview)  
+2. [Architecture & Data Flow](#architecture--data-flow)  
+3. [Local Setup Instructions](#local-setup-instructions)  
+4. [Folder Structure](#folder-structure)  
+5. [Deployment](#deployment)  
+6. [Live Demo](#live-demo)  
+7. [Credits](#credits)  
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## Project Overview
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project demonstrates an automated content rewriting system:
+
+1. **Backend**: Laravel handles storing articles, exposing REST APIs (`/api/articles`, `/api/articles/latest`).  
+2. **NodeJS Worker**: Automatically fetches the latest article, finds reference articles via Google, scrapes content, rewrites using OpenAI LLM, and updates Laravel.  
+3. **Frontend**: React app that fetches articles via API and shows both original and updated content to users.
+
+---
+
+## Architecture & Data Flow
+
+| Laravel Backend | <------ | NodeJS Worker | ------> | LLM API (OpenAI) |
+| (MySQL DB) | | (Automation) | | |
+| | | | | |
++-----------------+ +-------------------+ +------------------+
+^
+| REST API
+|
++------------------+
+| |
+| React Frontend |
+| |
+
+
+**Flow Explanation**:
+
+1. **Initial Data**: Laravel stores initial articles in MySQL.  
+2. **Automation Phase**: NodeJS worker:
+   - Fetches the latest article (`/api/articles/latest`)  
+   - Searches Google for reference articles  
+   - Scrapes content of top references  
+   - Rewrites article using OpenAI API  
+   - Updates Laravel via `/api/articles` POST request  
+3. **Frontend**: Displays original and updated articles in React UI.
+
+---
+
+## Local Setup Instructions
+
+### Prerequisites
+
+- **PHP >= 8.0**  
+- **Composer**  
+- **NodeJS >= 18**  
+- **npm / yarn**  
+- **MySQL**  
+
+---
+
+### Backend Setup (Laravel)
+
+```bash
+# Go to backend folder
+cd backend-laravel
+
+# Install dependencies
+composer install
+
+# Copy .env.example to .env and configure your MySQL credentials
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Run migrations
+php artisan migrate
+
+# Start server
+php artisan serve
+
+Laravel backend will run at http://127.0.0.1:8000.
+
+NodeJS Worker Setup
+# Go to NodeJS worker folder
+cd worker-node
+
+# Install dependencies
+npm install
+
+# Create .env file with the following:
+OPENAI_API_KEY=<your_openai_api_key>
+API_BASE_URL=http://127.0.0.1:8000/api
+
+# Run the worker
+node index.js
+
+The worker will automatically fetch, rewrite, and publish updated articles.
+
+FRONTEND SETUP-REACT
+# Go to frontend folder
+cd frontend
+
+# Install dependencies
+npm install
+
+# Create .env file with:
+REACT_APP_API_BASE=http://127.0.0.1:8000/api
+
+# Start frontend
+npm start
+
+React app will run at http://localhost:3000.
+
+FOLDER STRUCTURE
+backend-laravel/   # Laravel backend
+  ├─ app/           # Controllers, Models, Providers
+  ├─ database/      # Migrations & seeds
+  ├─ routes/api.php # API routes
+  └─ .env           # Environment variables
+
+worker-node/       # NodeJS automation worker
+  ├─ index.js      # Orchestrator script
+  ├─ services/     # Article, scraper, rewriter, publisher, Google search
+  └─ .env          # OpenAI key & API base URL
+
+frontend/          # React frontend
+  ├─ src/          # Components, services, pages
+  ├─ public/       # Static files
+  └─ .env          # API base URL
+
+
+
+
+
+Credits
+
+Built by: Palak Makwana
+
+Tools & Libraries: Laravel, NodeJS, ReactJS, TailwindCSS, OpenAI API
+
+Architecture inspired by modern automation pipelines for content rewriting.
