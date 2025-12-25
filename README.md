@@ -176,7 +176,7 @@ frontend/          # React frontend
   └─ .env          # API base URL
 
 
-
+FRONTEND DEPLOYED LINK: https://beyondchats-git-main-palakkk09s-projects.vercel.app/
 
 
 Credits

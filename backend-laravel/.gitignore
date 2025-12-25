@@ -8,6 +8,7 @@
 
 # Node
 worker-node/node_modules
+worker-node/.env
 
 # React
 frontend/node_modules
